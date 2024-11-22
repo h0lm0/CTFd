@@ -141,6 +141,13 @@ def is_admin():
     else:
         return False
 
+def get_rank():
+    if authed():
+        user = get_current_team()
+        if user and user.rank:
+            return user.rank
+    else:
+        return False 
 
 def is_verified():
     if get_config("verify_emails"):

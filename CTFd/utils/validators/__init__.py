@@ -50,3 +50,8 @@ def validate_language(language):
         return
     if LANGUAGE_NAMES.get(language) is None:
         raise ValidationError("Invalid Language")
+
+def validate_rank(rank):
+    if rank.strip() in ["ScriptKiddie", "Roxxor"]:
+        return
+    return ValidationError("Invalid rank")

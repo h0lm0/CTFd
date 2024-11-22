@@ -30,6 +30,12 @@
 		{{ form.country(class="form-control custom-select", autocomplete="off") }}
 	</div>
 
+	<div class="form-group">
+		{{ form.rank.label }}
+		<small class="float-right text-muted align-text-bottom">Optional</small>
+		{{ form.rank(class="form-control custom-select", autocomplete="off") }}
+	</div>
+
 	{{ render_extra_fields(form.extra) }}
 
 	<div class="form-group">

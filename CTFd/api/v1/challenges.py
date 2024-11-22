@@ -52,6 +52,7 @@ from CTFd.utils.user import (
     get_current_user,
     get_current_user_attrs,
     is_admin,
+    get_rank,
 )
 
 challenges_namespace = Namespace(
@@ -138,7 +139,7 @@ class ChallengeList(Resource):
 
         # Admins get a shortcut to see all challenges despite pre-requisites
         admin_view = is_admin() and request.args.get("view") == "admin"
-
+            
         # Get a cached mapping of challenge_id to solve_count
         solve_counts = get_solve_counts_for_challenges(admin=admin_view)
 
@@ -160,7 +161,7 @@ class ChallengeList(Resource):
             # `None` for the solve count if visiblity checks fail
             solve_count_dfl = None
 
-        chal_q = get_all_challenges(admin=admin_view, field=field, q=q, **query_args)
+        chal_q = get_all_challenges(admin=admin_view, field=field, q=q, user=user, **query_args)
 
         # Iterate through the list of challenges, adding to the object which
         # will be JSONified back to the client

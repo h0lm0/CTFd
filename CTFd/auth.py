@@ -189,6 +189,7 @@ def register():
     if current_user.authed():
         return redirect(url_for("challenges.listing"))
 
+
     num_users_limit = int(get_config("num_users", default=0))
     num_users = Users.query.filter_by(banned=False, hidden=False).count()
     if num_users_limit and num_users >= num_users_limit:
@@ -197,11 +198,13 @@ def register():
             description=f"Reached the maximum number of users ({num_users_limit}).",
         )
 
+    ranks = ["ScriptKiddie", "Roxxor"] # added to renderTemplate
+    
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         email_address = request.form.get("email", "").strip().lower()
         password = request.form.get("password", "").strip()
-
+        rank = request.form.get("rank")
         website = request.form.get("website")
         affiliation = request.form.get("affiliation")
         country = request.form.get("country")
@@ -221,6 +224,7 @@ def register():
         pass_long = len(password) > 128
         valid_email = validators.validate_email(email_address)
         team_name_email_check = validators.validate_email(name)
+        valid_rank = validators.validate_rank(rank) # validate rank (prevent front break)
 
         if get_config("registration_code"):
             if (
@@ -304,6 +308,7 @@ def register():
             return render_template(
                 "register.html",
                 errors=errors,
+                ranks=ranks,
                 name=request.form["name"],
                 email=request.form["email"],
                 password=request.form["password"],
@@ -313,6 +318,7 @@ def register():
                 user = Users(
                     name=name,
                     email=email_address,
+                    rank=rank, # rank added to needed fields
                     password=password,
                     bracket_id=bracket_id,
                 )
@@ -373,7 +379,7 @@ def register():
 
         return redirect(url_for("challenges.listing"))
     else:
-        return render_template("register.html", errors=errors)
+        return render_template("register.html", errors=errors, ranks=ranks)
 
 
 @auth.route("/login", methods=["POST", "GET"])
