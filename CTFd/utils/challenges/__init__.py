@@ -31,11 +31,11 @@ def get_all_challenges(admin=False, field=None, q=None, user=None ,**query_args)
         match (user.rank):
             case ("ScriptKiddie"):
                 chal_q = chal_q.filter(
-                    and_(Challenges.rank in ["Introduction", "Facile"])
+                    and_(Challenges.value < 200)
                 )
             case ("Roxxor"):
                 chal_q = chal_q.filter(
-                    and_(Challenges.rank in ["Moyen", "Difficile", "Insane"])
+                    and_(Challenges.value >= 200)
                 )
     chal_q = (
         chal_q.filter_by(**query_args)

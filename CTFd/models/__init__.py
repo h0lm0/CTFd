@@ -115,7 +115,6 @@ class Challenges(db.Model):
     attribution = db.Column(db.Text)
     connection_info = db.Column(db.Text)
     next_id = db.Column(db.Integer, db.ForeignKey("challenges.id", ondelete="SET NULL"))
-    rank = db.Column(db.String(80))
     max_attempts = db.Column(db.Integer, default=0)
     value = db.Column(db.Integer)
     category = db.Column(db.String(80))

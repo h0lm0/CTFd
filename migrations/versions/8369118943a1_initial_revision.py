@@ -26,7 +26,6 @@ def upgrade():
         sa.Column("value", sa.Integer(), nullable=True),
         sa.Column("category", sa.String(length=80), nullable=True),
         sa.Column("type", sa.String(length=80), nullable=True),
-        sa.Column("rank", sa.String(length=80), nullable=True),
         sa.Column("state", sa.String(length=80), nullable=False),
         sa.Column("requirements", sa.JSON(), nullable=True),
         sa.PrimaryKeyConstraint("id"),
